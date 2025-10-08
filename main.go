@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
-	"text/template"
 
 	"github.com/gorilla/mux"
 )
@@ -24,11 +24,11 @@ func echo(w http.ResponseWriter, r *http.Request) {
 	echoed := r.FormValue("message")
 
 	if echoed == "" {
-		write(w, "You did not type anything D:")
-		return
+		//The form is already protected against zero-values, but I added this just in case.
+		echoed = "You did not type anything D:"
 	}
-
-	write(w, echoed)
+	//html/template already protects against XSS
+	templates.ExecuteTemplate(w, "message.html", echoed)
 }
 
 func main() {
