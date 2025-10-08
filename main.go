@@ -11,10 +11,6 @@ import (
 
 var templates *template.Template
 
-func write(w http.ResponseWriter, msg string) {
-	w.Write([]byte(msg))
-}
-
 func loadMainPage(w http.ResponseWriter, r *http.Request) {
 	templates.ExecuteTemplate(w, "index.html", nil)
 }
